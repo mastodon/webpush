@@ -10,6 +10,7 @@ require 'webpush/version'
 require 'webpush/errors'
 require 'webpush/vapid_key'
 require 'webpush/encryption'
+require 'webpush/legacy/encryption'
 require 'webpush/request'
 require 'webpush/railtie' if defined?(Rails)
 
