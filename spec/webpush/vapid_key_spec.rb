@@ -63,6 +63,13 @@ describe Webpush::VapidKey do
       expect(key.private_key).to eq(vapid_private_key)
     end
 
+    it 'initializes properly with a public key only' do
+      key = Webpush::VapidKey.from_keys(vapid_public_key, nil)
+
+      expect(key.public_key).to eq(vapid_public_key)
+      expect(key.private_key).to be_nil
+    end
+
     it 'ignores the public key when the private key is provided' do
       key = Webpush::VapidKey.from_keys('notavalidpublickey', vapid_private_key)
 
