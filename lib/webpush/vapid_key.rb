@@ -78,7 +78,7 @@ module Webpush
 
     # Retrieve the encoded elliptic curve public key suitable for the Web Push request
     #
-    # @return [String] the encoded VAPID public key for us in 'Encryption' header
+    # @return [String] the encoded VAPID public key for use in 'Encryption' header
     def public_key_for_push_header
       public_key.delete('=')
     end
