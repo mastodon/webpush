@@ -73,21 +73,21 @@ module Webpush
     #
     # @return [String] encoded binary representation of 65-byte VAPID public key
     def public_key
-      encode64(curve.public_key.to_bn.to_s(2))
+      @public_key_encoded ||= Webpush.encode64(curve.public_key.to_bn.to_s(2))
     end
 
     # Retrieve the encoded elliptic curve public key suitable for the Web Push request
     #
     # @return [String] the encoded VAPID public key for us in 'Encryption' header
     def public_key_for_push_header
-      trim_encode64(curve.public_key.to_bn.to_s(2))
+      public_key.delete('=')
     end
 
     # Retrive the encoded elliptic curve private key for VAPID protocol
     #
     # @return [String] base64 urlsafe-encoded binary representation of 32-byte VAPID private key
     def private_key
-      encode64(curve.private_key.to_s(2)) if curve.private?
+      @private_key_encoded ||= Webpush.encode64(curve.private_key.to_s(2)) if curve.private?
     end
 
     def curve_name
@@ -109,16 +109,6 @@ module Webpush
 
     def inspect
       "#<#{self.class}:#{object_id.to_s(16)} #{to_h.map { |k, v| ":#{k}=#{v}" }.join(' ')}>"
-    end
-
-    private
-
-    def encode64(bin)
-      Webpush.encode64(bin)
-    end
-
-    def trim_encode64(bin)
-      encode64(bin).delete('=')
     end
   end
 end
